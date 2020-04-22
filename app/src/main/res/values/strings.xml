@@ -6,4 +6,6 @@
     <string name="submitButton">Entrar</string>
     <string name="registerButton">Cadastro</string>
     <string name="forgotPasswordLabel">Esqueceu sua senha?</string>
+    <string name="userInputHint">Nome</string>
+    <string name="confirmRegisterButton">Confirmar</string>
 </resources>
