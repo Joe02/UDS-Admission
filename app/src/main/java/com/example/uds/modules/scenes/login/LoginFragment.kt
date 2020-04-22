@@ -33,6 +33,13 @@ class LoginFragment : Fragment() {
 
     private fun setListeners() {
 
+        loginBinding.forgotPasswordOption.setOnClickListener {
+            view?.let { it ->
+                Navigation.findNavController(it)
+                    .navigate(R.id.action_loginFragment_to_passwordRecoveryFragment)
+            }
+        }
+
         loginBinding.registerButton.setOnClickListener {
             view?.let { it ->
                 Navigation.findNavController(it)
