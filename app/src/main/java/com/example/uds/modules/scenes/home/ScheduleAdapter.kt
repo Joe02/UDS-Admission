@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uds.R
@@ -11,7 +12,7 @@ import com.example.uds.databinding.ItemScheduleBinding
 import com.example.uds.helpers.recyclerview_helper.ItemClickListener
 import com.example.uds.models.Schedule
 
-class ScheduleAdapter(val schedules: List<Schedule>) : RecyclerView.Adapter<ScheduleAdapter.ItemViewHolder> () {
+class ScheduleAdapter(var schedules: List<Schedule>) : RecyclerView.Adapter<ScheduleAdapter.ItemViewHolder> () {
 
     var itemClickListener: ItemClickListener? = null
     private var inflater: LayoutInflater? = null
@@ -31,6 +32,7 @@ class ScheduleAdapter(val schedules: List<Schedule>) : RecyclerView.Adapter<Sche
         val scheduleTitle: TextView = binding.scheduleTitle
         val scheduleDescription: TextView = binding.scheduleDescription
         val scheduleAuthor: TextView = binding.scheduleAuthor
+        val scheduleCard: CardView = binding.scheduleCard
 
         override fun onClick(v: View?) {
             itemClickListener?.onItemClick(adapterPosition)
@@ -53,6 +55,20 @@ class ScheduleAdapter(val schedules: List<Schedule>) : RecyclerView.Adapter<Sche
     override fun getItemCount(): Int = schedules.size
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
+
+        holder.scheduleCard.setOnClickListener{
+
+            if (schedules[position].isExpanded) {
+                schedules[position].isExpanded = false
+                holder.scheduleDescription.maxLines = 1
+                holder.scheduleAuthor.visibility = View.GONE
+            } else {
+                schedules[position].isExpanded = true
+                holder.scheduleDescription.maxLines = 999
+                holder.scheduleAuthor.visibility = View.VISIBLE
+            }
+        }
+
         holder.scheduleTitle.text = schedules[position].title
         holder.scheduleDescription.text = schedules[position].description
         holder.scheduleAuthor.text = schedules[position].author
