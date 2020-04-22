@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">UDS</string>
+    <string name="logoContentDescription">Imagem representativa do aplicativo</string>
+    <string name="emailInputHint">Email</string>
+    <string name="passwordInputHint">Senha</string>
+    <string name="submitButton">Entrar</string>
+    <string name="registerButton">Cadastro</string>
 </resources>
