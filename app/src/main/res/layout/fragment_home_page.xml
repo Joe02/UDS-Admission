@@ -6,9 +6,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-
         <androidx.appcompat.widget.Toolbar
+            android:elevation="5dp"
             android:id="@+id/home_page_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -20,7 +19,7 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:text="Olá"
+                    android:text="@string/greetings"
                     android:textSize="19sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -29,7 +28,7 @@
                     android:text="Exemplo"
                     android:textSize="19sp"
                     android:id="@+id/user_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
                     android:ellipsize="end"

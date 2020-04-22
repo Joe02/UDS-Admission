@@ -24,10 +24,10 @@ class HomePageFragment : Fragment() {
         homeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home_page, container, false)
 
         lateinit var schedule1 : Schedule
-        var schedules : MutableList<Schedule> = mutableListOf()
+        val schedules : MutableList<Schedule> = mutableListOf()
 
         for (number in 1..10) {
-            schedule1 = Schedule("Teste $number")
+            schedule1 = Schedule("Teste $number", "Lorem ipsum riling rawling rawlers chama no reskein do mectrab FOOOOOON", "Joe, o Grande", false)
             schedules.add(schedule1)
         }
 

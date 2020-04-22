@@ -28,7 +28,9 @@ class ScheduleAdapter(val schedules: List<Schedule>) : RecyclerView.Adapter<Sche
             itemView.setOnClickListener(this)
         }
 
-        val scheduleLabelLabel: TextView = binding.scheduleLabel
+        val scheduleTitle: TextView = binding.scheduleTitle
+        val scheduleDescription: TextView = binding.scheduleDescription
+        val scheduleAuthor: TextView = binding.scheduleAuthor
 
         override fun onClick(v: View?) {
             itemClickListener?.onItemClick(adapterPosition)
@@ -51,7 +53,9 @@ class ScheduleAdapter(val schedules: List<Schedule>) : RecyclerView.Adapter<Sche
     override fun getItemCount(): Int = schedules.size
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        holder.scheduleLabelLabel.text = schedules[position].name
+        holder.scheduleTitle.text = schedules[position].title
+        holder.scheduleDescription.text = schedules[position].description
+        holder.scheduleAuthor.text = schedules[position].author
     }
 
 }
