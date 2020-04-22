@@ -8,4 +8,7 @@
     <string name="forgotPasswordLabel">Esqueceu sua senha?</string>
     <string name="userInputHint">Nome</string>
     <string name="confirmRegisterButton">Confirmar</string>
+    <string name="login">Login</string>
+    <string name="register">Cadastro</string>
+    <string name="back">Voltar</string>
 </resources>
