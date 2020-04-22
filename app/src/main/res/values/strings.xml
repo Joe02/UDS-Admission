@@ -5,4 +5,5 @@
     <string name="passwordInputHint">Senha</string>
     <string name="submitButton">Entrar</string>
     <string name="registerButton">Cadastro</string>
+    <string name="forgotPasswordLabel">Esqueceu sua senha?</string>
 </resources>
