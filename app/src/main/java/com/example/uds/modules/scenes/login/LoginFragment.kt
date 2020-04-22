@@ -34,8 +34,8 @@ class LoginFragment : Fragment() {
     private fun setListeners() {
 
         loginBinding.registerButton.setOnClickListener {
-            view?.let { it1 ->
-                Navigation.findNavController(it1)
+            view?.let { it ->
+                Navigation.findNavController(it)
                     .navigate(R.id.action_loginFragment_to_registerFragment)
             }
         }
@@ -62,7 +62,10 @@ class LoginFragment : Fragment() {
 
         if (validation) {
             //TODO Login
-
+            view?.let { it ->
+                Navigation.findNavController(it)
+                    .navigate(R.id.action_loginFragment_to_homePageFragment)
+            }
         }
     }
 }

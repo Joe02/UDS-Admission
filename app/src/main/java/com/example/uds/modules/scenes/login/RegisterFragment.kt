@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.example.uds.R
 import com.example.uds.databinding.FragmentRegisterBinding
@@ -31,6 +32,13 @@ class RegisterFragment : Fragment() {
 
         val activity = (requireActivity() as AppCompatActivity)
         activity.supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back)
+
+        registerBinding.backToLogin.setOnClickListener {
+            view?.let { it ->
+                Navigation.findNavController(it)
+                    .navigate(R.id.action_registerFragment_to_loginFragment)
+            }
+        }
 
         return registerBinding.root
     }
