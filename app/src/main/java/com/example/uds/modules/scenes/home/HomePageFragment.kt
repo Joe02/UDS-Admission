@@ -13,10 +13,17 @@ import com.example.uds.databinding.FragmentHomePageBinding
 import com.example.uds.modules.scenes.home.components.closedSchedules.ClosedSchedulesFragment
 import com.example.uds.modules.scenes.home.components.openSchedules.OpenSchedulesFragment
 import com.google.android.material.tabs.TabLayout
+import com.google.firebase.auth.FirebaseAuth
 
 class HomePageFragment : Fragment() {
 
     private lateinit var homeBinding : FragmentHomePageBinding
+    private lateinit var auth: FirebaseAuth
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        auth = FirebaseAuth.getInstance()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,6 +35,7 @@ class HomePageFragment : Fragment() {
 
         setListeners()
         openSchedules()
+        homeBinding.userName.text = auth.currentUser?.displayName
 
         return homeBinding.root
     }

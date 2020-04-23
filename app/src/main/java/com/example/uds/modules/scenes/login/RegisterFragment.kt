@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -16,10 +15,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.example.uds.R
 import com.example.uds.databinding.FragmentRegisterBinding
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.FirebaseAuthUserCollisionException
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException
+import com.google.firebase.auth.*
 import java.util.regex.Pattern
 
 
@@ -94,15 +90,21 @@ class RegisterFragment : Fragment() {
                 registerBinding.passwordField.text.toString()
             ).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(
-                        context,
-                        context?.getString(R.string.invalidEmailOrPassword),
-                        Toast.LENGTH_SHORT
-                    ).show()
                     auth.signInWithEmailAndPassword(
                         registerBinding.emailField.text.toString(),
                         registerBinding.passwordField.text.toString()
                     )
+
+                    val user = FirebaseAuth.getInstance().currentUser
+                    val profileUpdate = UserProfileChangeRequest.Builder()
+                        .setDisplayName(registerBinding.usernameField.text.toString()).build()
+
+                    user?.updateProfile(profileUpdate)
+
+                    view?.let { it ->
+                        Navigation.findNavController(it)
+                            .navigate(R.id.action_registerFragment_to_loginFragment)
+                    }
                 } else {
                     try {
                         throw task.exception!!

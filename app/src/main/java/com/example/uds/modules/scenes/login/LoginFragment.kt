@@ -87,11 +87,21 @@ class LoginFragment : Fragment() {
         }
 
             if (validation) {
-            //TODO Login
-            view?.let { it ->
-                Navigation.findNavController(it)
-                    .navigate(R.id.action_loginFragment_to_homePageFragment)
-            }
+
+                auth.signInWithEmailAndPassword(
+                    loginBinding.emailField.text.toString(),
+                    loginBinding.passwordField.text.toString()
+                ).addOnCompleteListener {
+                    task ->
+                    if (task.isSuccessful) {
+                        //TODO Task successful
+                    }
+                }
+
+                view?.let { it ->
+                    Navigation.findNavController(it)
+                        .navigate(R.id.action_loginFragment_to_homePageFragment)
+                }
         }
     }
 
