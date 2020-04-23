@@ -15,22 +15,31 @@
             android:id="@+id/action_loginFragment_to_homePageFragment"
             app:destination="@id/homePageFragment"
             app:enterAnim="@anim/fragment_fade_enter" />
+        <action
+            android:id="@+id/action_loginFragment_to_passwordRecoveryFragment"
+            app:destination="@id/passwordRecoveryFragment"
+            app:enterAnim="@anim/fragment_close_enter" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.uds.modules.scenes.login.RegisterFragment"
         android:label="RegisterFragment" >
         <action
-            android:id="@+id/action_registerFragment_to_homePageFragment"
-            app:destination="@id/homePageFragment"
-            app:enterAnim="@anim/fragment_fade_enter" />
-        <action
             android:id="@+id/action_registerFragment_to_loginFragment"
             app:destination="@id/loginFragment"
-            app:enterAnim="@anim/fragment_open_exit" />
+            app:enterAnim="@anim/fragment_open_enter" />
     </fragment>
     <fragment
         android:id="@+id/homePageFragment"
         android:name="com.example.uds.modules.scenes.home.HomePageFragment"
         android:label="HomePageFragment" />
+    <fragment
+        android:id="@+id/passwordRecoveryFragment"
+        android:name="com.example.uds.modules.scenes.login.PasswordRecoveryFragment"
+        android:label="PasswordRecoveryFragment" >
+        <action
+            android:id="@+id/action_passwordRecoveryFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/fragment_close_enter" />
+    </fragment>
 </navigation>
