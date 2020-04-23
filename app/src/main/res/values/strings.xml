@@ -22,4 +22,5 @@
     <string name="emailAndPasswordWrong">Endereço de Email ou senha inválidos.</string>
     <string name="emailWrong">O formato do email está incorreto</string>
     <string name="passwordError">A senha precisa ter ao menos 6 caracteres</string>
+    <string name="nonNullField">Esse campo não pode ser vazio</string>
 </resources>

@@ -60,7 +60,6 @@ class LoginFragment : Fragment() {
             ).matches() && loginBinding.emailField.text?.isNotEmpty()!!
         ) {
             validation = false
-            Toast.makeText(context, getString(R.string.emailAndPasswordWrong), Toast.LENGTH_SHORT).show()
         } else {
             if (!validateEmail(loginBinding.emailField.text.toString())) {
                 loginBinding.loginInputLayout.error = getString(R.string.emailWrong)
@@ -71,7 +70,6 @@ class LoginFragment : Fragment() {
 
         if (loginBinding.passwordField.text.toString().length <= 5) {
             validation = false
-            Toast.makeText(context, getString(R.string.emailAndPasswordWrong), Toast.LENGTH_SHORT).show()
             loginBinding.passwordInputLayout.error = getString(R.string.passwordError)
         } else {
             loginBinding.passwordInputLayout.isErrorEnabled = false
