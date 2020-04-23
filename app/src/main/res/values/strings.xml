@@ -18,4 +18,5 @@
     <string name="typeYourEmailBelow">Digite seu Email a baixo</string>
     <string name="reOpenSchedule">Reabrir</string>
     <string name="closeSchedule">Fechar</string>
+    <string name="addPautaDescription">Adicionar Pauta</string>
 </resources>
