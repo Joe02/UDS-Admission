@@ -16,4 +16,6 @@
     <string name="openSchedulesLabel">Pautas Abertas</string>
     <string name="closedSchedulesLabel">Pautas Fechadas</string>
     <string name="typeYourEmailBelow">Digite seu Email a baixo</string>
+    <string name="reOpenSchedule">Reabrir</string>
+    <string name="closeSchedule">Fechar</string>
 </resources>

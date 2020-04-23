@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.fragment.app.FragmentTransaction
 import com.example.uds.R
 import com.example.uds.databinding.FragmentHomePageBinding
-import com.example.uds.models.Schedule
+import com.example.uds.modules.scenes.home.components.closedSchedules.ClosedSchedulesFragment
+import com.example.uds.modules.scenes.home.components.openSchedules.OpenSchedulesFragment
+import com.google.android.material.tabs.TabLayout
 
 class HomePageFragment : Fragment() {
 
@@ -23,18 +25,43 @@ class HomePageFragment : Fragment() {
         super.onCreateView(inflater, container, savedInstanceState)
         homeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home_page, container, false)
 
-        lateinit var schedule1 : Schedule
-        val schedules : MutableList<Schedule> = mutableListOf()
-
-        for (number in 1..10) {
-            schedule1 = Schedule("Teste $number", "Lorem ipsum riling rawling rawlers chama no reskein do mectrab FOOOOOON", "Joe, o Grande", false)
-            schedules.add(schedule1)
-        }
-
-        homeBinding.schedulesRecycler.layoutManager = LinearLayoutManager(context)
-        homeBinding.schedulesRecycler.setHasFixedSize(true)
-        homeBinding.schedulesRecycler.adapter = ScheduleAdapter(schedules)
+        setListeners()
+        openSchedules()
 
         return homeBinding.root
+    }
+
+    private fun setListeners() {
+
+        homeBinding.pageSelector.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
+            override fun onTabReselected(tab: TabLayout.Tab?) { }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) { }
+
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                when(tab?.position) {
+                    0 -> { openSchedules() }
+                    1 -> { closedSchedules() }
+                }
+            }
+        })
+    }
+
+    private fun openSchedules() {
+        val transaction: FragmentTransaction? = activity?.supportFragmentManager?.beginTransaction()
+        transaction?.replace(R.id.home_fragment,
+            OpenSchedulesFragment()
+        )
+        transaction?.addToBackStack(null)
+        transaction?.commit()
+    }
+
+    private fun closedSchedules() {
+        val transaction: FragmentTransaction? = activity?.supportFragmentManager?.beginTransaction()
+        transaction?.replace(R.id.home_fragment,
+            ClosedSchedulesFragment()
+        )
+        transaction?.addToBackStack(null)
+        transaction?.commit()
     }
 }

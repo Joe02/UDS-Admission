@@ -52,6 +52,21 @@
                     android:fontFamily="sans-serif-black"
                     android:visibility="gone" />
 
+                <Button
+                    android:clickable="true"
+                    android:visibility="gone"
+                    android:focusable="true"
+                    android:id="@+id/close_or_open_schedule"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/round_button"
+                    android:fontFamily="sans-serif-black"
+                    android:textColor="#FFF"
+                    app:layout_constraintLeft_toRightOf="parent"
+                    app:layout_constraintRight_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/schedule_author" />
+
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
