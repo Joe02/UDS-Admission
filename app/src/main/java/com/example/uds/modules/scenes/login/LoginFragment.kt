@@ -5,19 +5,30 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AlphaAnimation
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.example.uds.R
 import com.example.uds.databinding.FragmentLoginBinding
+import com.google.firebase.auth.FirebaseAuth
 import java.util.regex.Pattern
 
 class LoginFragment : Fragment() {
 
+    private lateinit var auth: FirebaseAuth
     private lateinit var loginBinding : FragmentLoginBinding
-    var buttonAnimation : AlphaAnimation = AlphaAnimation(10F, 0.1F)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        auth = FirebaseAuth.getInstance()
+
+        if (auth.currentUser != null) {
+            view?.let { it ->
+                Navigation.findNavController(it)
+                    .navigate(R.id.action_loginFragment_to_homePageFragment)
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

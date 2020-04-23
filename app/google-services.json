@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "737771088240",
+    "firebase_url": "https://uds-admission.firebaseio.com",
+    "project_id": "uds-admission",
+    "storage_bucket": "uds-admission.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:737771088240:android:aed7c6e62ae0f576ed87b5",
+        "android_client_info": {
+          "package_name": "com.example.uds"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "737771088240-7k7rppnnk0ce2edtgqg2665o4m828248.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyrjK_x2KTOTI5xBvCBVLmQx-5DXDrkgo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "737771088240-7k7rppnnk0ce2edtgqg2665o4m828248.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -19,7 +19,7 @@
     <string name="reOpenSchedule">Reabrir</string>
     <string name="closeSchedule">Fechar</string>
     <string name="addPautaDescription">Adicionar Pauta</string>
-    <string name="emailAndPasswordWrong">Endereço de Email ou senha inválidos.</string>
+    <string name="invalidEmailOrPassword">Endereço de Email ou senha inválidos.</string>
     <string name="emailWrong">O formato do email está incorreto</string>
     <string name="passwordError">A senha precisa ter ao menos 6 caracteres</string>
     <string name="nonNullField">Esse campo não pode ser vazio</string>
@@ -27,4 +27,7 @@
     <string name="scheduleDescriptionForm">Descrição da Pauta</string>
     <string name="scheduleDetailsForm">Detalhes da Pauta</string>
     <string name="scheduleAuthorForm">Autor da Pauta</string>
+    <string name="weakPasswordException">Senha muito fraca</string>
+    <string name="invalidEmail">Email inválido</string>
+    <string name="userAlreadySignedUp">Usuário já cadastrado</string>
 </resources>
