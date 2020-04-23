@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.Navigation
 import com.example.uds.R
 import com.example.uds.databinding.FragmentHomePageBinding
 import com.example.uds.modules.scenes.home.components.closedSchedules.ClosedSchedulesFragment
@@ -32,6 +33,10 @@ class HomePageFragment : Fragment() {
     }
 
     private fun setListeners() {
+
+        homeBinding.addNewSchedule.setOnClickListener{
+            createSchedule()
+        }
 
         homeBinding.pageSelector.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab?) { }
@@ -63,5 +68,12 @@ class HomePageFragment : Fragment() {
         )
         transaction?.addToBackStack(null)
         transaction?.commit()
+    }
+
+    private fun createSchedule() {
+        view?.let { it ->
+            Navigation.findNavController(it)
+                .navigate(R.id.action_homePageFragment_to_scheduleCreationForm)
+        }
     }
 }

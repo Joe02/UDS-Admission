@@ -31,8 +31,9 @@ class OpenSchedulesFragment : Fragment() {
         for (number in 1..10) {
             schedule1 = Schedule(
                 "Teste $number",
-                "Lorem ipsum riling rawling rawlers chama no reskein do mectrab FOOOOOON",
-                "Joe, o Grande",
+                "Short description",
+                "Joe",
+                "Long description",
                 false
             )
             schedules.add(schedule1)

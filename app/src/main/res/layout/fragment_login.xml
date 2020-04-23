@@ -34,23 +34,26 @@
             android:id="@+id/login_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="55dp"
             android:layout_marginTop="15dp"
             app:layout_constraintLeft_toRightOf="parent"
+            app:errorEnabled="true"
             app:layout_constraintRight_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/login_form">
+            app:layout_constraintTop_toBottomOf="@id/login_form"
+            android:paddingLeft="55dp"
+            tools:ignore="RtlSymmetry">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/email_field"
                 android:inputType="textEmailAddress"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="55dp"
                 android:layout_marginEnd="55dp"
                 android:drawableLeft="@drawable/ic_email_outlined"
                 android:drawablePadding="15dp"
                 android:hint="@string/emailInputHint"
                 android:drawableStart="@drawable/ic_email_outlined"
-                />
+                android:layout_marginRight="55dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -59,22 +62,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:passwordToggleEnabled="true"
-            android:layout_marginTop="5dp"
+            app:errorEnabled="true"
+            android:paddingStart="55dp"
             app:layout_constraintLeft_toRightOf="parent"
             app:layout_constraintRight_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/login_input_layout">
+            app:layout_constraintTop_toBottomOf="@id/login_input_layout"
+            android:paddingLeft="55dp"
+            tools:ignore="RtlSymmetry">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password_field"
                 android:inputType="textPassword"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="55dp"
                 android:layout_marginEnd="55dp"
                 android:drawableLeft="@drawable/ic_lock_outlined"
                 android:drawablePadding="15dp"
                 android:hint="@string/passwordInputHint"
-                android:drawableStart="@drawable/ic_lock_outlined"/>
+                android:drawableStart="@drawable/ic_lock_outlined"
+                android:layout_marginRight="55dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
