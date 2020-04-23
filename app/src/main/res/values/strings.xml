@@ -19,4 +19,7 @@
     <string name="reOpenSchedule">Reabrir</string>
     <string name="closeSchedule">Fechar</string>
     <string name="addPautaDescription">Adicionar Pauta</string>
+    <string name="emailAndPasswordWrong">Endereço de Email ou senha inválidos.</string>
+    <string name="emailWrong">O formato do email está incorreto</string>
+    <string name="passwordError">A senha precisa ter ao menos 6 caracteres</string>
 </resources>
