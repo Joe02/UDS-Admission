@@ -42,7 +42,7 @@ class HomePageFragment : Fragment() {
 
     private fun setListeners() {
 
-        homeBinding.addNewSchedule.setOnClickListener{
+        homeBinding.addSchedule.setOnClickListener{
             createSchedule()
         }
 
