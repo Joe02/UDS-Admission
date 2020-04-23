@@ -32,14 +32,28 @@
     <fragment
         android:id="@+id/homePageFragment"
         android:name="com.example.uds.modules.scenes.home.HomePageFragment"
-        android:label="HomePageFragment" />
+        android:label="HomePageFragment" >
+        <action
+            android:id="@+id/action_homePageFragment_to_scheduleCreationForm"
+            app:destination="@id/scheduleCreationForm"
+            app:enterAnim="@anim/fragment_close_enter" />
+    </fragment>
     <fragment
         android:id="@+id/passwordRecoveryFragment"
-        android:name="com.example.uds.modules.scenes.login.PasswordRecoveryFragment"
+        android:name="com.example.uds.modules.scenes.login.components.PasswordRecoveryFragment"
         android:label="PasswordRecoveryFragment" >
         <action
             android:id="@+id/action_passwordRecoveryFragment_to_loginFragment"
             app:destination="@id/loginFragment"
+            app:enterAnim="@anim/fragment_close_enter" />
+    </fragment>
+    <fragment
+        android:id="@+id/scheduleCreationForm"
+        android:name="com.example.uds.modules.scenes.createSchedule.ScheduleCreationForm"
+        android:label="ScheduleCreationForm" >
+        <action
+            android:id="@+id/action_scheduleCreationForm_to_homePageFragment"
+            app:destination="@id/homePageFragment"
             app:enterAnim="@anim/fragment_close_enter" />
     </fragment>
 </navigation>

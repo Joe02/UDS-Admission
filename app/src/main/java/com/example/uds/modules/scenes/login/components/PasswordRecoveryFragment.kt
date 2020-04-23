@@ -1,4 +1,4 @@
-package com.example.uds.modules.scenes.login
+package com.example.uds.modules.scenes.login.components
 
 import android.os.Bundle
 import android.view.LayoutInflater
