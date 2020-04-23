@@ -31,7 +31,7 @@ class PasswordRecoveryFragment : Fragment() {
         recoveryBinding.navUp.setOnClickListener {
             view?.let { it ->
                 Navigation.findNavController(it)
-                    .navigate(R.id.action_passwordRecoveryFragment_to_loginFragment)
+                    .navigateUp()
             }
         }
 
@@ -39,7 +39,7 @@ class PasswordRecoveryFragment : Fragment() {
             //TODO enviar email com recuperação.
             view?.let { it ->
                 Navigation.findNavController(it)
-                    .navigate(R.id.action_passwordRecoveryFragment_to_loginFragment)
+                    .navigateUp()
             }
         }
     }

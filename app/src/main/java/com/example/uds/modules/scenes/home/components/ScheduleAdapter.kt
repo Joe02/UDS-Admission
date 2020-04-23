@@ -70,18 +70,20 @@ class ScheduleAdapter(var schedules: List<Schedule>, var listType: String, var c
             if (schedules[position].isExpanded) {
                 schedules[position].isExpanded = false
                 holder.scheduleDescription.maxLines = 1
+                holder.scheduleDescription.text = schedules[position].shortDescription
                 holder.scheduleAuthor.visibility = View.GONE
                 holder.scheduleButton.visibility = View.GONE
             } else {
                 schedules[position].isExpanded = true
                 holder.scheduleDescription.maxLines = 999
+                holder.scheduleDescription.text = schedules[position].fullDescription
                 holder.scheduleAuthor.visibility = View.VISIBLE
                 holder.scheduleButton.visibility = View.VISIBLE
             }
         }
 
         holder.scheduleTitle.text = schedules[position].title
-        holder.scheduleDescription.text = schedules[position].description
+        holder.scheduleDescription.text = schedules[position].shortDescription
         holder.scheduleAuthor.text = schedules[position].author
     }
 

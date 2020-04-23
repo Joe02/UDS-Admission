@@ -29,6 +29,14 @@ class ScheduleCreationForm : Fragment() {
 
     private fun setUpListeners() {
 
+        scheduleFormBinding.createSchedule.setOnClickListener {
+            //TODO Criar nova schedule
+            view?.let { it ->
+                Navigation.findNavController(it)
+                    .navigateUp()
+            }
+        }
+
         scheduleFormBinding.navUp.setOnClickListener {
             view?.let { it ->
                 Navigation.findNavController(it)
