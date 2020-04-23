@@ -30,10 +30,42 @@ class ScheduleCreationForm : Fragment() {
     private fun setUpListeners() {
 
         scheduleFormBinding.createSchedule.setOnClickListener {
-            //TODO Criar nova schedule
-            view?.let { it ->
-                Navigation.findNavController(it)
-                    .navigateUp()
+            var validation = true
+
+            if (scheduleFormBinding.scheduleAuthorFormInput.text.isNullOrEmpty()) {
+                scheduleFormBinding.scheduleAuthorFormLayout.error = context?.getString(R.string.nonNullField)
+                validation = false
+            } else {
+                scheduleFormBinding.scheduleAuthorFormLayout.isErrorEnabled = false
+            }
+
+            if (scheduleFormBinding.scheduleDescriptionFormInput.text.isNullOrEmpty()) {
+                scheduleFormBinding.scheduleDescriptionFormLayout.error = context?.getString(R.string.nonNullField)
+                validation = false
+            } else {
+                scheduleFormBinding.scheduleDescriptionFormLayout.isErrorEnabled = false
+            }
+
+            if (scheduleFormBinding.scheduleLongDescriptionFormInput.text.isNullOrEmpty()) {
+                scheduleFormBinding.scheduleLongDescriptionFormLayout.error = context?.getString(R.string.nonNullField)
+                validation = false
+            } else {
+                scheduleFormBinding.scheduleLongDescriptionFormLayout.isErrorEnabled = false
+            }
+
+            if (scheduleFormBinding.scheduleTitleFormInput.text.isNullOrEmpty()) {
+                scheduleFormBinding.scheduleTitleFormLayout.error = context?.getString(R.string.nonNullField)
+                validation = false
+            } else {
+                scheduleFormBinding.scheduleTitleFormLayout.isErrorEnabled = false
+            }
+
+            if (validation) {
+                //TODO Validation with firebase
+                view?.let { it ->
+                    Navigation.findNavController(it)
+                        .navigate(R.id.action_scheduleCreationForm_to_homePageFragment)
+                }
             }
         }
 

@@ -45,7 +45,7 @@ class RegisterFragment : Fragment() {
         registerBinding.backToLogin.setOnClickListener {
             view?.let { it ->
                 Navigation.findNavController(it)
-                    .navigateUp()
+                    .navigate(R.id.action_registerFragment_to_loginFragment)
             }
         }
 
