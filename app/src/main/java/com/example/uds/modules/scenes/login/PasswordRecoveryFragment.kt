@@ -34,5 +34,13 @@ class PasswordRecoveryFragment : Fragment() {
                     .navigate(R.id.action_passwordRecoveryFragment_to_loginFragment)
             }
         }
+
+        recoveryBinding.submitButton.setOnClickListener {
+            //TODO enviar email com recuperação.
+            view?.let { it ->
+                Navigation.findNavController(it)
+                    .navigate(R.id.action_passwordRecoveryFragment_to_loginFragment)
+            }
+        }
     }
 }

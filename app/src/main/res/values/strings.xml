@@ -13,4 +13,7 @@
     <string name="back">Voltar</string>
     <string name="greetings">Olá</string>
     <string name="finishedSchedules">Pautas finalizadas</string>
+    <string name="openSchedulesLabel">Pautas Abertas</string>
+    <string name="closedSchedulesLabel">Pautas Fechadas</string>
+    <string name="typeYourEmailBelow">Digite seu Email a baixo</string>
 </resources>

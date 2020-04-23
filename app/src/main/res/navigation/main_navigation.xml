@@ -17,7 +17,8 @@
             app:enterAnim="@anim/fragment_fade_enter" />
         <action
             android:id="@+id/action_loginFragment_to_passwordRecoveryFragment"
-            app:destination="@id/passwordRecoveryFragment" />
+            app:destination="@id/passwordRecoveryFragment"
+            app:enterAnim="@anim/fragment_close_enter" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -38,6 +39,7 @@
         android:label="PasswordRecoveryFragment" >
         <action
             android:id="@+id/action_passwordRecoveryFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/fragment_close_enter" />
     </fragment>
 </navigation>
