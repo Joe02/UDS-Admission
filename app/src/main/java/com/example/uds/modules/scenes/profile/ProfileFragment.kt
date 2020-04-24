@@ -1,10 +1,14 @@
 package com.example.uds.modules.scenes.profile
 
 import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
@@ -74,6 +78,41 @@ class ProfileFragment : Fragment() {
 
             val alertDialog = builder.create()
             alertDialog.show()
+        }
+
+        profileBinding.changeName.setOnClickListener {
+            val usernameInput = EditText(context)
+            val changeUsernameDialog = AlertDialog.Builder(context)
+            changeUsernameDialog.setTitle(getString(R.string.typeNewUsername))
+
+            val usernameInputLayout = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+            )
+            usernameInput.layoutParams = usernameInputLayout
+
+            changeUsernameDialog.setView(usernameInput)
+            changeUsernameDialog.setIcon(R.drawable.ic_person_filled)
+
+            changeUsernameDialog.setPositiveButton("Confirmar") { dialog: DialogInterface, i: Int ->
+                if (usernameInput.text.toString() != auth.currentUser?.displayName) {
+                    val user = FirebaseAuth.getInstance().currentUser
+                    val profileUpdate = UserProfileChangeRequest.Builder()
+                        .setDisplayName(usernameInput.text.toString()).build()
+
+                    user?.updateProfile(profileUpdate)
+                    dialog.cancel()
+                    profileBinding.changeName.text = usernameInput.text
+                    Toast.makeText(
+                        context,
+                        getString(R.string.successfulChangedName),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    usernameInput.error = getString(R.string.equalDisplayName)
+                }
+            }
+            changeUsernameDialog.show()
         }
     }
 

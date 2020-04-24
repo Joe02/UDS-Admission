@@ -40,4 +40,8 @@
     <string name="profile">Perfil</string>
     <string name="changePassword">Mudar senha</string>
     <string name="changeUsername">Mudar nome</string>
+    <string name="equalDisplayName">O nome escolhido é igual ao atual</string>
+    <string name="successfulChangedName">Nome alterado com sucesso!</string>
+    <string name="typeNewPassword">Digite o novo nome de usuário</string>
+    <string name="typeNewUsername">Digite o novo nome de usuário</string>
 </resources>
