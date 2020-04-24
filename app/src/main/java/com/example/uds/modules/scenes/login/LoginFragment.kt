@@ -5,12 +5,16 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.example.uds.R
 import com.example.uds.databinding.FragmentLoginBinding
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 
 class LoginFragment : Fragment() {
@@ -20,12 +24,16 @@ class LoginFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        auth = FirebaseAuth.getInstance()
 
-        if (auth.currentUser != null) {
-            view?.let { it ->
-                Navigation.findNavController(it)
-                    .navigate(R.id.action_loginFragment_to_homePageFragment)
+        //Disable callback on HomePageFragment
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
+            //TODO Exit dialog
+        }
+        callback.isEnabled
+
+        GlobalScope.launch {
+            MainScope().launch {
+                attemptLogin()
             }
         }
     }
@@ -37,6 +45,7 @@ class LoginFragment : Fragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         loginBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
+        loginBinding.loginLayout.visibility = View.GONE
 
         setListeners()
 
@@ -118,5 +127,29 @@ class LoginFragment : Fragment() {
         val emailMatcher = emailPattern.matcher(emailCharSequence)
 
         return emailMatcher.matches()
+    }
+
+    private fun attemptLogin() {
+
+        var auth = FirebaseAuth.getInstance()
+        var user = auth.currentUser
+
+        MainScope().launch {
+            auth = FirebaseAuth.getInstance()
+            user = auth.currentUser
+        }
+
+        if (user != null) {
+            view?.let { it ->
+                Navigation.findNavController(it)
+                    .navigate(R.id.action_loginFragment_to_homePageFragment)
+            }
+        } else {
+            MainScope().launch {
+                activity?.runOnUiThread {
+                    loginBinding.loginLayout.visibility = View.VISIBLE
+                }
+            }
+        }
     }
 }
