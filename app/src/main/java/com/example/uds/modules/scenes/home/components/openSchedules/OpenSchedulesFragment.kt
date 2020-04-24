@@ -11,7 +11,6 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.uds.R
 import com.example.uds.databinding.FragmentOpenSchedulesBinding
-import com.example.uds.helpers.firebase_helper.FirebaseDatabaseHelper
 import com.example.uds.models.Schedule
 import com.example.uds.modules.scenes.home.components.ScheduleAdapter
 import kotlinx.coroutines.GlobalScope
@@ -75,7 +74,7 @@ class OpenSchedulesFragment : Fragment() {
 
     private fun getSchedulesFromDatabase() {
         GlobalScope.launch {
-            val schedules = FirebaseDatabaseHelper().readSchedules()
+            val schedules = OpenSchedulesViewModel().readSchedules()
             MainScope().launch {
                 schedulesList.value = schedules
             }
