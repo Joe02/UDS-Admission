@@ -1,12 +1,13 @@
 package com.example.uds.modules.scenes.login
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -14,15 +15,20 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.example.uds.R
 import com.example.uds.databinding.FragmentRegisterBinding
+import com.google.firebase.auth.*
 import java.util.regex.Pattern
 
+
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class RegisterFragment : Fragment() {
 
     private lateinit var registerBinding : FragmentRegisterBinding
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+        auth = FirebaseAuth.getInstance()
     }
 
     override fun onCreateView(
@@ -76,6 +82,46 @@ class RegisterFragment : Fragment() {
             registerBinding.passwordInputLayout.error = getString(R.string.passwordError)
         } else {
             registerBinding.passwordInputLayout.isErrorEnabled = false
+        }
+
+        if (validation) {
+            auth.createUserWithEmailAndPassword(
+                registerBinding.emailField.text.toString(),
+                registerBinding.passwordField.text.toString()
+            ).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    auth.signInWithEmailAndPassword(
+                        registerBinding.emailField.text.toString(),
+                        registerBinding.passwordField.text.toString()
+                    )
+
+                    val user = FirebaseAuth.getInstance().currentUser
+                    val profileUpdate = UserProfileChangeRequest.Builder()
+                        .setDisplayName(registerBinding.usernameField.text.toString()).build()
+
+                    user?.updateProfile(profileUpdate)
+
+                    view?.let { it ->
+                        Navigation.findNavController(it)
+                            .navigate(R.id.action_registerFragment_to_loginFragment)
+                    }
+                } else {
+                    try {
+                        throw task.exception!!
+                    } catch (e: FirebaseAuthWeakPasswordException) {
+                        registerBinding.passwordInputLayout.error = getString(R.string.weakPasswordException)
+                        registerBinding.passwordInputLayout.requestFocus()
+                    } catch (e: FirebaseAuthInvalidCredentialsException) {
+                        registerBinding.loginInputLayout.error = getString(R.string.invalidEmail)
+                        registerBinding.loginInputLayout.requestFocus()
+                    } catch (e: FirebaseAuthUserCollisionException) {
+                        registerBinding.loginInputLayout.error = getString(R.string.userAlreadySignedUp)
+                        registerBinding.loginInputLayout.requestFocus()
+                    } catch (e: Exception) {
+                        Log.e(TAG, e.message)
+                    }
+                }
+            }
         }
     }
 

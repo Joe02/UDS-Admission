@@ -5,19 +5,39 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AlphaAnimation
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.example.uds.R
 import com.example.uds.databinding.FragmentLoginBinding
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 
 class LoginFragment : Fragment() {
 
+    private var auth: FirebaseAuth = FirebaseAuth.getInstance()
     private lateinit var loginBinding : FragmentLoginBinding
-    var buttonAnimation : AlphaAnimation = AlphaAnimation(10F, 0.1F)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        //Disable callback on HomePageFragment
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
+            //TODO Exit dialog
+        }
+        callback.isEnabled
+
+        GlobalScope.launch {
+            MainScope().launch {
+                attemptLogin()
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,6 +46,7 @@ class LoginFragment : Fragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         loginBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
+        loginBinding.loginLayout.visibility = View.GONE
 
         setListeners()
 
@@ -76,12 +97,22 @@ class LoginFragment : Fragment() {
         }
 
             if (validation) {
-            //TODO Login
-            view?.let { it ->
-                Navigation.findNavController(it)
-                    .navigate(R.id.action_loginFragment_to_homePageFragment)
+
+                auth.signInWithEmailAndPassword(
+                    loginBinding.emailField.text.toString(),
+                    loginBinding.passwordField.text.toString()
+                ).addOnCompleteListener {
+                    task ->
+                    if (task.isSuccessful) {
+                        view?.let { it ->
+                            Navigation.findNavController(it)
+                                .navigate(R.id.action_loginFragment_to_homePageFragment)
+                        }
+                    } else {
+                        Toast.makeText(context, "Email ou senha inválidos", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
-        }
     }
 
     fun validateEmail(email: String): Boolean {
@@ -97,5 +128,29 @@ class LoginFragment : Fragment() {
         val emailMatcher = emailPattern.matcher(emailCharSequence)
 
         return emailMatcher.matches()
+    }
+
+    private fun attemptLogin() {
+
+        var auth = FirebaseAuth.getInstance()
+        var user = auth.currentUser
+
+        MainScope().launch {
+            auth = FirebaseAuth.getInstance()
+            user = auth.currentUser
+        }
+
+        if (user != null) {
+            view?.let { it ->
+                Navigation.findNavController(it)
+                    .navigate(R.id.action_loginFragment_to_homePageFragment)
+            }
+        } else {
+            MainScope().launch {
+                activity?.runOnUiThread {
+                    loginBinding.loginLayout.visibility = View.VISIBLE
+                }
+            }
+        }
     }
 }

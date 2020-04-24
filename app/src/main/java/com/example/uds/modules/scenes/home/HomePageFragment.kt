@@ -1,9 +1,11 @@
 package com.example.uds.modules.scenes.home
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -13,10 +15,42 @@ import com.example.uds.databinding.FragmentHomePageBinding
 import com.example.uds.modules.scenes.home.components.closedSchedules.ClosedSchedulesFragment
 import com.example.uds.modules.scenes.home.components.openSchedules.OpenSchedulesFragment
 import com.google.android.material.tabs.TabLayout
+import com.google.firebase.auth.FirebaseAuth
 
 class HomePageFragment : Fragment() {
 
     private lateinit var homeBinding : FragmentHomePageBinding
+    private lateinit var auth: FirebaseAuth
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        auth = FirebaseAuth.getInstance()
+
+        //Disable callback on HomePageFragment
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
+            val builder = AlertDialog.Builder(context)
+            builder.setMessage(getString(R.string.logoutConfirmationWarning))
+                .setTitle(getString(R.string.logoutConfirmation)).setCancelable(true)
+
+            builder.setPositiveButton("Sim") {
+                dialog, which -> auth.signOut()
+                view?.let { it ->
+                    Navigation.findNavController(it)
+                        .navigate(R.id.action_homePageFragment_to_loginFragment)
+                }
+
+            }
+
+            builder.setNegativeButton("Não") {
+                dialog, which -> dialog.cancel()
+            }
+
+            val alertDialog = builder.create()
+            alertDialog.show()
+
+        }
+        callback.isEnabled
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,13 +62,14 @@ class HomePageFragment : Fragment() {
 
         setListeners()
         openSchedules()
+        homeBinding.userName.text = auth.currentUser?.displayName
 
         return homeBinding.root
     }
 
     private fun setListeners() {
 
-        homeBinding.addNewSchedule.setOnClickListener{
+        homeBinding.addSchedule.setOnClickListener{
             createSchedule()
         }
 
