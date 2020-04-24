@@ -9,10 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.example.uds.R
 import com.example.uds.databinding.FragmentPasswordRecoveryBinding
+import com.google.firebase.auth.FirebaseAuth
 
 class PasswordRecoveryFragment : Fragment() {
 
     private lateinit var recoveryBinding : FragmentPasswordRecoveryBinding
+    private var auth = FirebaseAuth.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,7 +38,7 @@ class PasswordRecoveryFragment : Fragment() {
         }
 
         recoveryBinding.submitButton.setOnClickListener {
-            //TODO enviar email com recuperação.
+            auth.sendPasswordResetEmail(recoveryBinding.emailField.editText?.text.toString())
             view?.let { it ->
                 Navigation.findNavController(it)
                     .navigate(R.id.action_passwordRecoveryFragment_to_loginFragment)

@@ -35,4 +35,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="logoutConfirmation">Deseja sair da sessão?</string>
     <string name="logoutConfirmationWarning">Você será redirecionado para a tela de login.</string>
+    <string name="profileGreetingsLabel">Bem vindo(a) !</string>
+    <string name="logoff">Sair</string>
+    <string name="profile">Perfil</string>
+    <string name="changePassword">Mudar senha</string>
+    <string name="changeUsername">Mudar nome</string>
 </resources>
