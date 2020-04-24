@@ -1,5 +1,6 @@
 package com.example.uds.modules.scenes.home
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,7 +28,26 @@ class HomePageFragment : Fragment() {
 
         //Disable callback on HomePageFragment
         val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
-            //TODO Exit dialog
+            val builder = AlertDialog.Builder(context)
+            builder.setMessage(getString(R.string.logoutConfirmationWarning))
+                .setTitle(getString(R.string.logoutConfirmation)).setCancelable(true)
+
+            builder.setPositiveButton("Sim") {
+                dialog, which -> auth.signOut()
+                view?.let { it ->
+                    Navigation.findNavController(it)
+                        .navigate(R.id.action_homePageFragment_to_loginFragment)
+                }
+
+            }
+
+            builder.setNegativeButton("Não") {
+                dialog, which -> dialog.cancel()
+            }
+
+            val alertDialog = builder.create()
+            alertDialog.show()
+
         }
         callback.isEnabled
     }

@@ -5,6 +5,7 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -19,7 +20,7 @@ import java.util.regex.Pattern
 
 class LoginFragment : Fragment() {
 
-    private lateinit var auth: FirebaseAuth
+    private var auth: FirebaseAuth = FirebaseAuth.getInstance()
     private lateinit var loginBinding : FragmentLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -103,15 +104,15 @@ class LoginFragment : Fragment() {
                 ).addOnCompleteListener {
                     task ->
                     if (task.isSuccessful) {
-                        //TODO Task successful
+                        view?.let { it ->
+                            Navigation.findNavController(it)
+                                .navigate(R.id.action_loginFragment_to_homePageFragment)
+                        }
+                    } else {
+                        Toast.makeText(context, "Email ou senha inválidos", Toast.LENGTH_SHORT).show()
                     }
                 }
-
-                view?.let { it ->
-                    Navigation.findNavController(it)
-                        .navigate(R.id.action_loginFragment_to_homePageFragment)
-                }
-        }
+            }
     }
 
     fun validateEmail(email: String): Boolean {

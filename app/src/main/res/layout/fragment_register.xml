@@ -105,6 +105,7 @@
             android:layout_height="wrap_content"
             android:paddingStart="55dp"
             android:paddingLeft="55dp"
+            app:passwordToggleEnabled="true"
             app:layout_constraintLeft_toRightOf="parent"
             app:layout_constraintRight_toLeftOf="parent"
             app:errorEnabled="true"
