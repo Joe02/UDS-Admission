@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.example.uds.R
 import com.example.uds.databinding.FragmentScheduleCreationBinding
+import com.example.uds.helpers.firebase_helper.FirebaseDatabaseHelper
+import com.example.uds.models.Schedule
 
 class ScheduleCreationForm : Fragment() {
 
@@ -61,7 +63,14 @@ class ScheduleCreationForm : Fragment() {
             }
 
             if (validation) {
-                //TODO Validation with firebase
+                val schedule = Schedule(
+                    scheduleFormBinding.scheduleTitleFormInput.text.toString(),
+                    scheduleFormBinding.scheduleDescriptionFormInput.text.toString(),
+                    scheduleFormBinding.scheduleLongDescriptionFormInput.text.toString(),
+                    scheduleFormBinding.scheduleAuthorFormInput.text.toString(),
+                    false
+                )
+                FirebaseDatabaseHelper().addSchedule(schedule)
                 view?.let { it ->
                     Navigation.findNavController(it)
                         .navigate(R.id.action_scheduleCreationForm_to_homePageFragment)
