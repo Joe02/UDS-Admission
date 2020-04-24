@@ -73,11 +73,11 @@ class OpenSchedulesFragment : Fragment() {
     }
 
     private fun getSchedulesFromDatabase() {
-        GlobalScope.launch {
-            val schedules = OpenSchedulesViewModel().readSchedules()
-            MainScope().launch {
-                schedulesList.value = schedules
-            }
-        }
+//        GlobalScope.launch {
+//            val schedules = //TODO Get data from firebase data class
+//            MainScope().launch {
+//                schedulesList.value = schedules
+//            }
+//        }
     }
 }
