@@ -1,5 +1,6 @@
 package com.example.uds.helpers.firebase_helper
 
+import android.util.Log
 import com.example.uds.models.Schedule
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -8,14 +9,13 @@ import com.google.firebase.database.ValueEventListener
 
 class FirebaseDatabaseHelper {
     private var database = FirebaseDatabase.getInstance()
-    private var reference = database.reference
     private var schedules = mutableListOf<Schedule>()
 
-    constructor() {
-        fun readSchedules(): MutableList<Schedule> {
+    fun readSchedules(): MutableList<Schedule> {
+            val reference = FirebaseDatabase.getInstance().reference.child("schedules")
             reference.addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
-                    TODO("Not yet implemented")
+                    Log.d("error", "Falha ao ler arquivos do banco")
                 }
 
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -27,5 +27,5 @@ class FirebaseDatabaseHelper {
             })
             return schedules
         }
-    }
+
 }

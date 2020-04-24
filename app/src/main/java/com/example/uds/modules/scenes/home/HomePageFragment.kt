@@ -50,7 +50,6 @@ class HomePageFragment : Fragment() {
 
         }
         callback.isEnabled
-
     }
 
     override fun onCreateView(
