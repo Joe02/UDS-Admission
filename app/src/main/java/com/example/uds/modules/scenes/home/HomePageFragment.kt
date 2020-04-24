@@ -69,6 +69,13 @@ class HomePageFragment : Fragment() {
 
     private fun setListeners() {
 
+        homeBinding.profileShortcut.setOnClickListener {
+            view?.let { it ->
+                Navigation.findNavController(it)
+                    .navigate(R.id.action_homePageFragment_to_profileFragment)
+            }
+        }
+
         homeBinding.addSchedule.setOnClickListener{
             createSchedule()
         }
