@@ -101,6 +101,7 @@ class RegisterFragment : Fragment() {
 
                     user?.updateProfile(profileUpdate)
 
+                    auth.signOut()
                     view?.let { it ->
                         Navigation.findNavController(it)
                             .navigate(R.id.action_registerFragment_to_loginFragment)

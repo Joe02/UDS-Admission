@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
@@ -15,6 +16,13 @@ class PasswordRecoveryFragment : Fragment() {
 
     private lateinit var recoveryBinding : FragmentPasswordRecoveryBinding
     private var auth = FirebaseAuth.getInstance()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        //Disable callback on PasswordRecoveryFragment
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(this) { }
+        callback.isEnabled
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,7 +37,7 @@ class PasswordRecoveryFragment : Fragment() {
         return recoveryBinding.root
     }
 
-    fun setUpListeners() {
+    private fun setUpListeners() {
         recoveryBinding.navUp.setOnClickListener {
             view?.let { it ->
                 Navigation.findNavController(it)

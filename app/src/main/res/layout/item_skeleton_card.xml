@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:targetApi="lollipop"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <View
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/first_card"
+        android:background="@drawable/round_button"
+        android:layout_margin="15dp"
+        android:backgroundTint="#393939"
+        android:layout_width="match_parent"
+        android:layout_height="80dp" />
+
+    <View
+        android:id="@+id/second_card"
+        android:background="@drawable/round_button"
+        android:layout_margin="15dp"
+        android:backgroundTint="#393939"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/first_card"
+        android:layout_height="80dp" />
+
+    <View
+        android:id="@+id/third_card"
+        android:background="@drawable/round_button"
+        android:layout_margin="15dp"
+        android:backgroundTint="#393939"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/second_card"
+        android:layout_height="80dp" />
+
+    <View
+        android:id="@+id/fourth_card"
+        android:background="@drawable/round_button"
+        android:layout_margin="15dp"
+        android:backgroundTint="#393939"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/third_card"
+        android:layout_height="80dp" />
+
+    <View
+        android:id="@+id/fifth_card"
+        android:background="@drawable/round_button"
+        android:layout_margin="15dp"
+        android:backgroundTint="#393939"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/fourth_card"
+        android:layout_height="80dp" />
+
+    <View
+        android:id="@+id/sixth_card"
+        android:background="@drawable/round_button"
+        android:layout_margin="15dp"
+        android:backgroundTint="#393939"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/fifth_card"
+        android:layout_height="80dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

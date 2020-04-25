@@ -12,6 +12,7 @@
         android:layout_height="match_parent"
         app:defaultNavHost="true"
         android:layout_width="match_parent"
-        app:navGraph="@navigation/main_navigation" />
+        app:navGraph="@navigation/main_navigation"
+        tools:ignore="FragmentTagUsage" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,15 +6,31 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ethanhua.skeleton.Skeleton
+import com.ethanhua.skeleton.ViewSkeletonScreen
 import com.example.uds.R
 import com.example.uds.databinding.FragmentOpenSchedulesBinding
 import com.example.uds.models.Schedule
 import com.example.uds.modules.scenes.home.components.ScheduleAdapter
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
 class OpenSchedulesFragment : Fragment() {
 
     private lateinit var openSchedulesBinding: FragmentOpenSchedulesBinding
+    private var openSchedulesList = MutableLiveData<MutableList<Schedule>>(mutableListOf())
+    private lateinit var viewAdapter : ScheduleAdapter
+    private val model: OpenSchedulesViewModel by viewModels()
+    private lateinit var skeleton: ViewSkeletonScreen
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        getData()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,31 +41,37 @@ class OpenSchedulesFragment : Fragment() {
         openSchedulesBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_open_schedules, container, false)
 
-        lateinit var schedule1: Schedule
-        val schedules: MutableList<Schedule> = mutableListOf()
+        skeleton = Skeleton
+            .bind(openSchedulesBinding.skeleton)
+            .load(R.layout.item_skeleton_card)
+            .shimmer(true)
+            .show()
 
-        for (number in 1..10) {
-            schedule1 = Schedule(
-                "Teste $number",
-                "Short description",
-                "Joe",
-                "Long description",
-                false
-            )
-            schedules.add(schedule1)
-        }
-
-        openSchedulesBinding.schedulesRecycler.layoutManager = LinearLayoutManager(context)
-        openSchedulesBinding.schedulesRecycler.setHasFixedSize(true)
-        openSchedulesBinding.schedulesRecycler.adapter =
-            context?.let {
-                ScheduleAdapter(
-                    schedules,
-                    "Open",
-                    it
-                )
-            }
+        openSchedulesList.value = mutableListOf()
 
         return openSchedulesBinding.root
+    }
+
+    private fun getData() {
+        GlobalScope.launch {
+
+            val response = model.loadOpenSchedules()
+
+            MainScope().launch {
+                skeleton.hide()
+                openSchedulesList.value = response
+                if (response?.size == 0) {
+                    openSchedulesBinding.noSchedulesOpenned.visibility = View.VISIBLE
+                }
+                viewAdapter =
+                    context?.let {openSchedulesList.value?.let { it1 ->
+                        ScheduleAdapter(it1, "Open", it )
+                    }
+                    }!!
+                openSchedulesBinding.schedulesRecycler.layoutManager = LinearLayoutManager(context)
+                openSchedulesBinding.schedulesRecycler.setHasFixedSize(true)
+                openSchedulesBinding.schedulesRecycler.adapter = viewAdapter
+            }
+        }
     }
 }

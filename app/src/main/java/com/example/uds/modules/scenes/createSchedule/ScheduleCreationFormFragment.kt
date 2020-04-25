@@ -6,13 +6,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.example.uds.R
 import com.example.uds.databinding.FragmentScheduleCreationBinding
+import com.example.uds.models.Schedule
+import com.google.firebase.auth.FirebaseAuth
 
-class ScheduleCreationForm : Fragment() {
+class ScheduleCreationFormFragment : Fragment() {
 
     private lateinit var scheduleFormBinding : FragmentScheduleCreationBinding
+    private lateinit var auth: FirebaseAuth
+    private val model : ScheduleCreationViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        auth = FirebaseAuth.getInstance()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,6 +32,7 @@ class ScheduleCreationForm : Fragment() {
         super.onCreateView(inflater, container, savedInstanceState)
         scheduleFormBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_schedule_creation, container, false)
 
+        scheduleFormBinding.scheduleAuthorFormInput.setText(auth.currentUser?.displayName.toString())
         setUpListeners()
 
         return scheduleFormBinding.root
@@ -61,7 +72,15 @@ class ScheduleCreationForm : Fragment() {
             }
 
             if (validation) {
-                //TODO Validation with firebase
+                val schedule = Schedule(
+                    "",
+                    scheduleFormBinding.scheduleTitleFormInput.text.toString(),
+                    scheduleFormBinding.scheduleDescriptionFormInput.text.toString(),
+                    scheduleFormBinding.scheduleLongDescriptionFormInput.text.toString(),
+                    scheduleFormBinding.scheduleAuthorFormInput.text.toString(),
+                    false
+                )
+                model.createNewSchedule(schedule)
                 view?.let { it ->
                     Navigation.findNavController(it)
                         .navigate(R.id.action_scheduleCreationForm_to_homePageFragment)

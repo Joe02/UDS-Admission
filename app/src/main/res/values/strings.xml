@@ -12,14 +12,11 @@
     <string name="register">Cadastro</string>
     <string name="back">Voltar</string>
     <string name="greetings">Olá</string>
-    <string name="finishedSchedules">Pautas finalizadas</string>
     <string name="openSchedulesLabel">Pautas Abertas</string>
     <string name="closedSchedulesLabel">Pautas Fechadas</string>
     <string name="typeYourEmailBelow">Digite seu Email a baixo</string>
     <string name="reOpenSchedule">Reabrir</string>
     <string name="closeSchedule">Fechar</string>
-    <string name="addPautaDescription">Adicionar Pauta</string>
-    <string name="invalidEmailOrPassword">Endereço de Email ou senha inválidos.</string>
     <string name="emailWrong">O formato do email está incorreto</string>
     <string name="passwordError">A senha precisa ter ao menos 6 caracteres</string>
     <string name="nonNullField">Esse campo não pode ser vazio</string>
@@ -32,16 +29,18 @@
     <string name="userAlreadySignedUp">Usuário já cadastrado</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="logoutConfirmation">Deseja sair da sessão?</string>
     <string name="logoutConfirmationWarning">Você será redirecionado para a tela de login.</string>
     <string name="profileGreetingsLabel">Bem vindo(a) !</string>
     <string name="logoff">Sair</string>
     <string name="profile">Perfil</string>
-    <string name="changePassword">Mudar senha</string>
     <string name="changeUsername">Mudar nome</string>
     <string name="equalDisplayName">O nome escolhido é igual ao atual</string>
     <string name="successfulChangedName">Nome alterado com sucesso!</string>
-    <string name="typeNewPassword">Digite o novo nome de usuário</string>
     <string name="typeNewUsername">Digite o novo nome de usuário</string>
+    <string name="deleteScheduleMessage">Não será possível recuperá-lá depois</string>
+    <string name="deleteScheduleTitle">Deseja mesmo deletar essa pauta?</string>
+    <string name="noOpennedSchedules">Você não possui nenhuma pauta aberta\nPara adicionar uma, clique no botão \'+\' a baixo.</string>
+    <string name="noClosedSchedules">Você não possui nenhuma pauta fechada.</string>
+    <string name="deleteScheduleDescription">Excluir pauta</string>
 </resources>

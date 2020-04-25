@@ -32,18 +32,38 @@
                 <TextView
                     android:id="@+id/schedule_title"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
                     android:fontFamily="sans-serif-condensed-medium"
                     android:textSize="20sp"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/schedule_description"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:paddingVertical="7.5dp" />
+                    tools:ignore="UseCompoundDrawables">
+
+                    <TextView
+                        android:id="@+id/schedule_description"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:paddingVertical="7.5dp" />
+
+                    <ImageView
+                        android:id="@+id/delete_schedule"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="right"
+                        android:contentDescription="@string/deleteScheduleDescription"
+                        android:src="@drawable/ic_delete"
+                        android:tint="#1976D2"
+                        tools:ignore="RtlHardcoded" />
+
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/schedule_author"

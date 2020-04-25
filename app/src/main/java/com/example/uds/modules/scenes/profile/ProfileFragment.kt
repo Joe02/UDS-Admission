@@ -115,12 +115,4 @@ class ProfileFragment : Fragment() {
             changeUsernameDialog.show()
         }
     }
-
-    private fun setUserName() {
-        val user = FirebaseAuth.getInstance().currentUser
-        val profileUpdate = UserProfileChangeRequest.Builder()
-            .setDisplayName(profileBinding.userName.text.toString()).build()
-
-        user?.updateProfile(profileUpdate)
-    }
 }
