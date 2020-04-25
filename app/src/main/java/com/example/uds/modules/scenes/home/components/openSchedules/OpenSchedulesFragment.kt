@@ -60,6 +60,9 @@ class OpenSchedulesFragment : Fragment() {
             MainScope().launch {
                 skeleton.hide()
                 openSchedulesList.value = response
+                if (response?.size == 0) {
+                    openSchedulesBinding.noSchedulesOpenned.visibility = View.VISIBLE
+                }
                 viewAdapter =
                     context?.let {openSchedulesList.value?.let { it1 ->
                         ScheduleAdapter(it1, "Open", it )

@@ -58,6 +58,9 @@ class ClosedSchedulesFragment : Fragment() {
             MainScope().launch {
                 skeleton.hide()
                 closedSchedulesList.value = response
+                if (response?.size == 0) {
+                    closedSchedulesBinding.noSchedulesClosed.visibility = View.VISIBLE
+                }
                 viewAdapter =
                     context?.let {closedSchedulesList.value?.let { it1 ->
                         ScheduleAdapter(it1, "Closed", it )

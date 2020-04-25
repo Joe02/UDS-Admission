@@ -83,4 +83,9 @@ class FirebaseDatabaseHelper : Observable() {
         reference.child("open").child(schedule.id).removeValue()
         reference.child("closed").child(schedule.id).setValue(schedule)
     }
+
+    fun removeSchedule(schedule: Schedule) {
+        reference.child("open").child(schedule.id).removeValue()
+        reference.child("closed").child(schedule.id).removeValue()
+    }
 }

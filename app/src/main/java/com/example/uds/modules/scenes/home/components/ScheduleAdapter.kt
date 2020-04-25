@@ -1,14 +1,17 @@
 package com.example.uds.modules.scenes.home.components
 
+import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LiveData
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uds.R
 import com.example.uds.databinding.ItemScheduleBinding
@@ -38,6 +41,7 @@ class ScheduleAdapter(var schedules: List<Schedule>, var listType: String, var c
         val scheduleAuthor: TextView = binding.scheduleAuthor
         val scheduleCard: CardView = binding.scheduleCard
         val scheduleButton: Button = binding.closeOrOpenSchedule
+        val scheduleDelete: ImageView = binding.deleteSchedule
 
         override fun onClick(v: View?) {
             itemClickListener?.onItemClick(adapterPosition)
@@ -67,6 +71,30 @@ class ScheduleAdapter(var schedules: List<Schedule>, var listType: String, var c
             holder.scheduleButton.text = context.getString(R.string.closeSchedule)
         }
 
+        holder.scheduleDelete.setOnClickListener {
+            val builder = AlertDialog.Builder(context)
+            builder
+                .setTitle(context.getString(R.string.deleteScheduleTitle))
+                .setCancelable(true)
+                .setMessage(
+                    context.getString(
+                        R.string.deleteScheduleMessage
+                    )
+                )
+
+            builder.setPositiveButton("Sim") { dialog, which ->
+                holder.scheduleCard.visibility = View.GONE
+                FirebaseDatabaseHelper().removeSchedule(schedules[position])
+                dialog.cancel()
+            }
+
+            builder.setNegativeButton("Não") { dialog, which ->
+                dialog.cancel()
+            }
+
+            val alertDialog = builder.create()
+            alertDialog.show()
+        }
         holder.scheduleCard.setOnClickListener{
 
             if (schedules[position].isExpanded) {
