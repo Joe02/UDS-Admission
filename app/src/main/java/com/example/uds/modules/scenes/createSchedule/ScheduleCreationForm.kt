@@ -11,10 +11,17 @@ import com.example.uds.R
 import com.example.uds.databinding.FragmentScheduleCreationBinding
 import com.example.uds.helpers.firebase_helper.FirebaseDatabaseHelper
 import com.example.uds.models.Schedule
+import com.google.firebase.auth.FirebaseAuth
 
 class ScheduleCreationForm : Fragment() {
 
     private lateinit var scheduleFormBinding : FragmentScheduleCreationBinding
+    private lateinit var auth: FirebaseAuth
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        auth = FirebaseAuth.getInstance()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,6 +31,7 @@ class ScheduleCreationForm : Fragment() {
         super.onCreateView(inflater, container, savedInstanceState)
         scheduleFormBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_schedule_creation, container, false)
 
+        scheduleFormBinding.scheduleAuthorFormInput.setText(auth.currentUser?.displayName.toString())
         setUpListeners()
 
         return scheduleFormBinding.root
