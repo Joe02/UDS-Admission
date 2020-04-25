@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.example.uds.R
 import com.example.uds.databinding.FragmentScheduleCreationBinding
@@ -13,10 +14,11 @@ import com.example.uds.helpers.firebase_helper.FirebaseDatabaseHelper
 import com.example.uds.models.Schedule
 import com.google.firebase.auth.FirebaseAuth
 
-class ScheduleCreationForm : Fragment() {
+class ScheduleCreationFormFragment : Fragment() {
 
     private lateinit var scheduleFormBinding : FragmentScheduleCreationBinding
     private lateinit var auth: FirebaseAuth
+    private val model : ScheduleCreationViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,7 +81,7 @@ class ScheduleCreationForm : Fragment() {
                     scheduleFormBinding.scheduleAuthorFormInput.text.toString(),
                     false
                 )
-                FirebaseDatabaseHelper().addSchedule(schedule)
+                model.createNewSchedule(schedule)
                 view?.let { it ->
                     Navigation.findNavController(it)
                         .navigate(R.id.action_scheduleCreationForm_to_homePageFragment)

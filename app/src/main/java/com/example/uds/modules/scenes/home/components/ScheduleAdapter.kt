@@ -108,6 +108,7 @@ class ScheduleAdapter(var schedules: List<Schedule>, var listType: String, var c
                 var counter = 0
                 for (schedule in schedulesBindings){
                     if (schedules[counter].isExpanded) {
+                        schedules[counter].isExpanded = false
                         schedule.scheduleAuthor.visibility = View.GONE
                         schedule.scheduleDescription.text = schedulesShortDescriptions[counter]
                         schedule.closeOrOpenSchedule.visibility = View.GONE

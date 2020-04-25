@@ -63,7 +63,7 @@
     </fragment>
     <fragment
         android:id="@+id/scheduleCreationForm"
-        android:name="com.example.uds.modules.scenes.createSchedule.ScheduleCreationForm"
+        android:name="com.example.uds.modules.scenes.createSchedule.ScheduleCreationFormFragment"
         android:label="ScheduleCreationForm" >
         <action
             android:id="@+id/action_scheduleCreationForm_to_homePageFragment"
