@@ -24,10 +24,8 @@ class ScheduleAdapter(var schedules: List<Schedule>, var listType: String, var c
     var itemClickListener: ItemClickListener? = null
     private var inflater: LayoutInflater? = null
     private var parent: ViewGroup? = null
-
-    fun setOnItemClickListener(itemClickListener: ItemClickListener) {
-        this.itemClickListener = itemClickListener
-    }
+    val schedulesBindings : MutableList<ItemScheduleBinding> = mutableListOf()
+    val schedulesShortDescriptions: MutableList<String> = mutableListOf()
 
     inner class ItemViewHolder(binding: ItemScheduleBinding) :
         RecyclerView.ViewHolder(binding.root), View.OnClickListener {
@@ -57,6 +55,7 @@ class ScheduleAdapter(var schedules: List<Schedule>, var listType: String, var c
         }
 
         val scheduleBinding = DataBindingUtil.inflate<ItemScheduleBinding>(inflater, R.layout.item_schedule, parent,false)
+        schedulesBindings.add(scheduleBinding)
 
         return ItemViewHolder(scheduleBinding)
     }
@@ -64,6 +63,8 @@ class ScheduleAdapter(var schedules: List<Schedule>, var listType: String, var c
     override fun getItemCount(): Int = schedules.size
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
+
+        schedulesShortDescriptions.add(schedules[position].shortDescription)
 
         if (listType == "Closed") {
             holder.scheduleButton.text = context.getString(R.string.reOpenSchedule)
@@ -104,6 +105,16 @@ class ScheduleAdapter(var schedules: List<Schedule>, var listType: String, var c
                 holder.scheduleAuthor.visibility = View.GONE
                 holder.scheduleButton.visibility = View.GONE
             } else {
+                var counter = 0
+                for (schedule in schedulesBindings){
+                    if (schedules[counter].isExpanded) {
+                        schedule.scheduleAuthor.visibility = View.GONE
+                        schedule.scheduleDescription.text = schedulesShortDescriptions[counter]
+                        schedule.closeOrOpenSchedule.visibility = View.GONE
+                        schedule.scheduleDescription.maxLines = 1
+                    }
+                    counter += 1
+                }
                 schedules[position].isExpanded = true
                 holder.scheduleDescription.maxLines = 999
                 holder.scheduleDescription.text = schedules[position].fullDescription
