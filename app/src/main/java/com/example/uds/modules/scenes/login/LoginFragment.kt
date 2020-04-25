@@ -27,9 +27,7 @@ class LoginFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         //Disable callback on LoginFragment
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
-            //TODO Exit dialog
-        }
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(this) { }
         callback.isEnabled
 
         GlobalScope.launch {

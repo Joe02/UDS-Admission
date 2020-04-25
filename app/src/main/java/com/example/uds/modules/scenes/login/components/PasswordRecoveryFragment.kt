@@ -20,9 +20,7 @@ class PasswordRecoveryFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //Disable callback on PasswordRecoveryFragment
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
-            //TODO Exit dialog
-        }
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(this) { }
         callback.isEnabled
     }
 
