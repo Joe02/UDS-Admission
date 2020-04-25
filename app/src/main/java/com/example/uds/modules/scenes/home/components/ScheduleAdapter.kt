@@ -12,6 +12,7 @@ import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uds.R
 import com.example.uds.databinding.ItemScheduleBinding
+import com.example.uds.helpers.firebase_helper.FirebaseDatabaseHelper
 import com.example.uds.helpers.recyclerview_helper.ItemClickListener
 import com.example.uds.models.Schedule
 
@@ -82,7 +83,15 @@ class ScheduleAdapter(var schedules: List<Schedule>, var listType: String, var c
                 holder.scheduleButton.visibility = View.VISIBLE
             }
         }
-
+        holder.scheduleButton.setOnClickListener {
+            if (listType == "Closed") {
+                FirebaseDatabaseHelper().addSchedule(schedules[position])
+                holder.scheduleCard.visibility = View.GONE
+            } else {
+                FirebaseDatabaseHelper().closeSchedule(schedules[position])
+                holder.scheduleCard.visibility = View.GONE
+            }
+        }
         holder.scheduleTitle.text = schedules[position].title
         holder.scheduleDescription.text = schedules[position].shortDescription
         holder.scheduleAuthor.text = schedules[position].author

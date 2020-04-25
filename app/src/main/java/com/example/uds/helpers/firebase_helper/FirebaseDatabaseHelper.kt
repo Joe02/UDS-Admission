@@ -71,21 +71,16 @@ class FirebaseDatabaseHelper : Observable() {
         val key: String
         if (schedule.id.isNotEmpty()) {
             key = schedule.id
-            reference.child("schedules").child("closed").child(schedule.id).removeValue()
+            reference.child("closed").child(schedule.id).removeValue()
         } else {
             key = reference.push().key.toString()
             schedule.id = key
         }
-        reference.child("schedules").child("open").child(key).setValue(schedule)
+        reference.child("open").child(key).setValue(schedule)
     }
 
     fun closeSchedule(schedule: Schedule) {
-        reference.child("schedules").child("open").child(schedule.id).removeValue()
-        reference.child("schedules").child("closed").child(schedule.id).setValue(schedule)
-    }
-
-    fun removeSchedule(schedule: Schedule) {
-        reference.child("schedules").child("open").child(schedule.id).removeValue()
-        reference.child("schedules").child("closed").child(schedule.id).removeValue()
+        reference.child("open").child(schedule.id).removeValue()
+        reference.child("closed").child(schedule.id).setValue(schedule)
     }
 }
