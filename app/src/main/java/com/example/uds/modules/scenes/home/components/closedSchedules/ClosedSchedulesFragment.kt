@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ethanhua.skeleton.Skeleton
+import com.ethanhua.skeleton.ViewSkeletonScreen
 import com.example.uds.R
 import com.example.uds.databinding.FragmentClosedSchedulesBinding
 import com.example.uds.models.Schedule
@@ -23,6 +25,7 @@ class ClosedSchedulesFragment : Fragment() {
     private var closedSchedulesList = MutableLiveData<MutableList<Schedule>>(mutableListOf())
     private lateinit var viewAdapter : ScheduleAdapter
     private val model: ClosedSchedulesViewModel by viewModels()
+    private lateinit var skeleton: ViewSkeletonScreen
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +41,12 @@ class ClosedSchedulesFragment : Fragment() {
         closedSchedulesBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_closed_schedules, container, false)
 
+        skeleton = Skeleton
+            .bind(closedSchedulesBinding.skeleton)
+            .load(R.layout.item_skeleton_card)
+            .shimmer(true)
+            .show()
+
         return closedSchedulesBinding.root
     }
 
@@ -47,7 +56,7 @@ class ClosedSchedulesFragment : Fragment() {
             val response = model.loadClosedSchedules()
 
             MainScope().launch {
-
+                skeleton.hide()
                 closedSchedulesList.value = response
                 viewAdapter =
                     context?.let {closedSchedulesList.value?.let { it1 ->

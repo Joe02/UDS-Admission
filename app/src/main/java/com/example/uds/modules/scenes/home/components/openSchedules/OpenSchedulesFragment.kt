@@ -8,8 +8,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ethanhua.skeleton.Skeleton
+import com.ethanhua.skeleton.ViewSkeletonScreen
 import com.example.uds.R
 import com.example.uds.databinding.FragmentOpenSchedulesBinding
 import com.example.uds.models.Schedule
@@ -24,6 +25,7 @@ class OpenSchedulesFragment : Fragment() {
     private var openSchedulesList = MutableLiveData<MutableList<Schedule>>(mutableListOf())
     lateinit var viewAdapter : ScheduleAdapter
     val model: OpenSchedulesViewModel by viewModels()
+    private lateinit var skeleton: ViewSkeletonScreen
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +41,12 @@ class OpenSchedulesFragment : Fragment() {
         openSchedulesBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_open_schedules, container, false)
 
+        skeleton = Skeleton
+            .bind(openSchedulesBinding.skeleton)
+            .load(R.layout.item_skeleton_card)
+            .shimmer(true)
+            .show()
+
         openSchedulesList.value = mutableListOf()
 
         return openSchedulesBinding.root
@@ -50,7 +58,7 @@ class OpenSchedulesFragment : Fragment() {
             val response = model.loadOpenSchedules()
 
             MainScope().launch {
-
+                skeleton.hide()
                 openSchedulesList.value = response
                 viewAdapter =
                     context?.let {openSchedulesList.value?.let { it1 ->
