@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,14 +21,13 @@ import kotlinx.coroutines.launch
 class OpenSchedulesFragment : Fragment() {
 
     private lateinit var openSchedulesBinding: FragmentOpenSchedulesBinding
-    private var schedulesList = MutableLiveData<List<Schedule>>(listOf())
+    private var openSchedulesList = MutableLiveData<MutableList<Schedule>>(mutableListOf())
     lateinit var viewAdapter : ScheduleAdapter
+    val model: OpenSchedulesViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        GlobalScope.launch {
-            getSchedulesFromDatabase()
-        }
+        getData()
     }
 
     override fun onCreateView(
@@ -39,45 +39,28 @@ class OpenSchedulesFragment : Fragment() {
         openSchedulesBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_open_schedules, container, false)
 
-        lateinit var schedule1: Schedule
-        val schedules: MutableList<Schedule> = mutableListOf()
-
-        for (number in 1..10) {
-            schedule1 = Schedule(
-                "Teste $number",
-                "Short description",
-                "Joe",
-                "Long description",
-                false
-            )
-            schedules.add(schedule1)
-        }
-
-        viewAdapter = schedulesList.value?.let { context?.let { context ->
-            ScheduleAdapter(it, "Open",
-                context
-            )
-        } }!!
-
-        val observer = Observer<Any> {
-            viewAdapter.notifyDataSetChanged()
-        }
-
-        schedulesList.observe(viewLifecycleOwner, observer)
-
-        openSchedulesBinding.schedulesRecycler.layoutManager = LinearLayoutManager(context)
-        openSchedulesBinding.schedulesRecycler.setHasFixedSize(true)
-        openSchedulesBinding.schedulesRecycler.adapter = viewAdapter
+        openSchedulesList.value = mutableListOf()
 
         return openSchedulesBinding.root
     }
 
-    private fun getSchedulesFromDatabase() {
-//        GlobalScope.launch {
-//            val schedules = //TODO Get data from firebase data class
-//            MainScope().launch {
-//                schedulesList.value = schedules
-//            }
-//        }
+    fun getData() {
+        GlobalScope.launch {
+
+            val response = model.loadOpenSchedules()
+
+            MainScope().launch {
+
+                openSchedulesList.value = response
+                viewAdapter =
+                    context?.let {openSchedulesList.value?.let { it1 ->
+                        ScheduleAdapter(it1, "Open", it )
+                    }
+                    }!!
+                openSchedulesBinding.schedulesRecycler.layoutManager = LinearLayoutManager(context)
+                openSchedulesBinding.schedulesRecycler.setHasFixedSize(true)
+                openSchedulesBinding.schedulesRecycler.adapter = viewAdapter
+            }
+        }
     }
 }

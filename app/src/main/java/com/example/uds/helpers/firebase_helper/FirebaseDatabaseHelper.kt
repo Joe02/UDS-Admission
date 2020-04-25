@@ -7,33 +7,85 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import java.lang.Exception
+import java.util.*
+import java.util.concurrent.CountDownLatch
 
-class FirebaseDatabaseHelper {
+class FirebaseDatabaseHelper : Observable() {
     private var database = FirebaseDatabase.getInstance()
-    var schedules = MutableLiveData<List<Schedule>>(mutableListOf())
-    private var reference = database.reference
-    private var schedulesList = mutableListOf<Schedule>()
+    private var reference = database.getReference("schedules")
+    private var schedulesList = MutableLiveData<MutableList<Schedule>>(mutableListOf())
 
-    fun readSchedules(): List<Schedule>? {
-        reference = FirebaseDatabase.getInstance().getReference("schedules")
-        reference.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-               Log.d("error", "Falha ao ler arquivos do banco")
-            }
+    fun getOpenSchedules(): MutableList<Schedule>? {
+        val done = CountDownLatch(1)
+        reference.child("open").addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {}
 
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                for (item in dataSnapshot.children) {
-                    val schedule = item.getValue(Schedule::class.java)
-                    schedule?.let { schedulesList.add(it) }
-                    schedules.value = schedulesList
+            override fun onDataChange(p0: DataSnapshot) {
+                schedulesList.value = mutableListOf()
+                if (p0.exists()) {
+                    for (item in p0.children) {
+                        val schedule = item.getValue(Schedule::class.java)
+                        schedule?.let { schedulesList.value!!.add(it) }
+                        done.countDown()
                     }
+                    schedulesList.value
                 }
-            })
-            return schedules.value
+            }
+        })
+        try {
+            done.await()
+        }catch (e: Exception){
+
         }
+        return schedulesList.value
+    }
+
+    fun getClosedSchedules(): MutableList<Schedule>? {
+        val done = CountDownLatch(1)
+        reference.child("closed").addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {}
+
+            override fun onDataChange(p0: DataSnapshot) {
+                schedulesList.value = mutableListOf()
+                if (p0.exists()) {
+                    for (item in p0.children) {
+                        val schedule = item.getValue(Schedule::class.java)
+                        schedule?.let { schedulesList.value!!.add(it) }
+                        done.countDown()
+                    }
+                    schedulesList.value
+                }
+            }
+        })
+        try {
+            done.await()
+        }catch (e: Exception){
+
+        }
+        return schedulesList.value
+    }
+
 
     fun addSchedule(schedule: Schedule) {
-        val key: String = reference.push().key.toString()
-        reference.child("schedules").child(key).setValue(schedule).addOnSuccessListener { }
+        val key: String
+        if (schedule.id.isNotEmpty()) {
+            key = schedule.id
+            reference.child("schedules").child("closed").child(schedule.id).removeValue()
+        } else {
+            key = reference.push().key.toString()
+            schedule.id = key
+        }
+        reference.child("schedules").child("open").child(key).setValue(schedule)
+    }
+
+    fun closeSchedule(schedule: Schedule) {
+        reference.child("schedules").child("open").child(schedule.id).removeValue()
+        reference.child("schedules").child("closed").child(schedule.id).setValue(schedule)
+    }
+
+    fun removeSchedule(schedule: Schedule) {
+        reference.child("schedules").child("open").child(schedule.id).removeValue()
+        reference.child("schedules").child("closed").child(schedule.id).removeValue()
     }
 }

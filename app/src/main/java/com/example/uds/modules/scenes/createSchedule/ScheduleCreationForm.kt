@@ -64,6 +64,7 @@ class ScheduleCreationForm : Fragment() {
 
             if (validation) {
                 val schedule = Schedule(
+                    "",
                     scheduleFormBinding.scheduleTitleFormInput.text.toString(),
                     scheduleFormBinding.scheduleDescriptionFormInput.text.toString(),
                     scheduleFormBinding.scheduleLongDescriptionFormInput.text.toString(),
