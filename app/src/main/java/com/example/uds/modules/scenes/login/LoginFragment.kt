@@ -30,6 +30,10 @@ class LoginFragment : Fragment() {
         val callback = requireActivity().onBackPressedDispatcher.addCallback(this) { }
         callback.isEnabled
 
+        if (auth.currentUser != null) {
+            auth.signOut()
+        }
+
         GlobalScope.launch {
             MainScope().launch {
                 attemptLogin()
