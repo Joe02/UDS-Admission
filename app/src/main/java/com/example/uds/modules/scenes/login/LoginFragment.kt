@@ -74,7 +74,7 @@ class LoginFragment : Fragment() {
         }
     }
 
-    fun submit() {
+    private fun submit() {
         var validation = true
         if (TextUtils.isEmpty(loginBinding.emailField.text) && !android.util.Patterns.EMAIL_ADDRESS.matcher(
                 loginBinding.emailField.text.toString()
@@ -115,7 +115,7 @@ class LoginFragment : Fragment() {
             }
     }
 
-    fun validateEmail(email: String): Boolean {
+    private fun validateEmail(email: String): Boolean {
         val validationString = ("^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
                 + "((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
                 + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."

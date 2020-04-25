@@ -29,7 +29,7 @@ class PasswordRecoveryFragment : Fragment() {
         return recoveryBinding.root
     }
 
-    fun setUpListeners() {
+    private fun setUpListeners() {
         recoveryBinding.navUp.setOnClickListener {
             view?.let { it ->
                 Navigation.findNavController(it)

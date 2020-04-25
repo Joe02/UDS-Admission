@@ -9,9 +9,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uds.R
 import com.example.uds.databinding.ItemScheduleBinding
@@ -19,13 +17,13 @@ import com.example.uds.helpers.firebase_helper.FirebaseDatabaseHelper
 import com.example.uds.helpers.recyclerview_helper.ItemClickListener
 import com.example.uds.models.Schedule
 
-class ScheduleAdapter(var schedules: List<Schedule>, var listType: String, var context: Context) : RecyclerView.Adapter<ScheduleAdapter.ItemViewHolder> () {
+class ScheduleAdapter(private var schedules: List<Schedule>, private var listType: String, private var context: Context) : RecyclerView.Adapter<ScheduleAdapter.ItemViewHolder> () {
 
     var itemClickListener: ItemClickListener? = null
     private var inflater: LayoutInflater? = null
     private var parent: ViewGroup? = null
-    val schedulesBindings : MutableList<ItemScheduleBinding> = mutableListOf()
-    val schedulesShortDescriptions: MutableList<String> = mutableListOf()
+    private val schedulesBindings : MutableList<ItemScheduleBinding> = mutableListOf()
+    private val schedulesShortDescriptions: MutableList<String> = mutableListOf()
 
     inner class ItemViewHolder(binding: ItemScheduleBinding) :
         RecyclerView.ViewHolder(binding.root), View.OnClickListener {

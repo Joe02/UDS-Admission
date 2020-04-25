@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.example.uds.R
 import com.example.uds.databinding.FragmentScheduleCreationBinding
-import com.example.uds.helpers.firebase_helper.FirebaseDatabaseHelper
 import com.example.uds.models.Schedule
 import com.google.firebase.auth.FirebaseAuth
 

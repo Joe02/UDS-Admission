@@ -50,7 +50,7 @@ class ClosedSchedulesFragment : Fragment() {
         return closedSchedulesBinding.root
     }
 
-    fun getData() {
+    private fun getData() {
         GlobalScope.launch {
 
             val response = model.loadClosedSchedules()

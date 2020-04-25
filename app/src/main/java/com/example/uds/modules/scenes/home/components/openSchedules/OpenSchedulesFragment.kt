@@ -23,8 +23,8 @@ class OpenSchedulesFragment : Fragment() {
 
     private lateinit var openSchedulesBinding: FragmentOpenSchedulesBinding
     private var openSchedulesList = MutableLiveData<MutableList<Schedule>>(mutableListOf())
-    lateinit var viewAdapter : ScheduleAdapter
-    val model: OpenSchedulesViewModel by viewModels()
+    private lateinit var viewAdapter : ScheduleAdapter
+    private val model: OpenSchedulesViewModel by viewModels()
     private lateinit var skeleton: ViewSkeletonScreen
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +52,7 @@ class OpenSchedulesFragment : Fragment() {
         return openSchedulesBinding.root
     }
 
-    fun getData() {
+    private fun getData() {
         GlobalScope.launch {
 
             val response = model.loadOpenSchedules()
